@@ -44,21 +44,36 @@ public class API {
     }
 
     public List<MovieBase> getUpComingMovies() throws Exception {
-        List<MovieBase> movies = new ArrayList<MovieBase>();
+        List<MovieBase> movies = new ArrayList<>();
         if(m_DBType == DBTYPE.DB_TMDB){
             MovieResultsPage resultPage = m_tmdbapi.getMovies().getUpcoming("en", 1);//TODO:change after adding additional language support
             List<MovieDb> results = resultPage.getResults();
             for(MovieDb eachMovie: results){
                 movies.add(new MovieTMDB(eachMovie));
             }
-            return movies;
         }else{
             List<MovieCinemalytics> upcomingMovies = m_CNMDAPI.GetMovieRepositoryInstance().GetUpcomingMovies();
             for(MovieCinemalytics eachMovie : upcomingMovies){
                 movies.add(new MovieCNM(eachMovie));
             }
-            return movies;
         }
+        return movies;
+    }
+    public List<MovieBase> getNowTrending() throws Exception {
+        List<MovieBase> movies = new ArrayList<>();
+        if(m_DBType == DBTYPE.DB_TMDB){
+            MovieResultsPage resultsPage = m_tmdbapi.getMovies().getUpcoming("en",1);//TODO:change after adding additional language support
+            List<MovieDb> result = resultsPage.getResults();
+            for(MovieDb eachMovie: result){
+                movies.add(new MovieTMDB(eachMovie));
+            }
+        }else{
+            List<MovieCinemalytics> upcomingMovies =m_CNMDAPI.GetMovieRepositoryInstance().GetReleasedThisWeekMovies();
+            for(MovieCinemalytics eachMovie : upcomingMovies){
+                movies.add(new MovieCNM(eachMovie));
+            }
+        }
+        return movies;
     }
     public List<MovieBase> getTopRatedMovies() throws Exception {
         List<MovieBase> movies = new ArrayList<MovieBase>();
@@ -77,7 +92,7 @@ public class API {
             return movies;
         }
     }
-    public List<MovieBase> listMoviesByGendre(String genre)throws Exception{
+    public List<MovieBase> listMoviesByGenre(String genre)throws Exception{
         List<MovieBase> movies = new ArrayList<MovieBase>();
         if(m_DBType == DBTYPE.DB_TMDB){
             MovieResultsPage resultsPage = m_tmdbapi.getGenre().getGenreMovies(GenerType.getID(genre), "en", 1, true);//TODO:change after adding additional language support

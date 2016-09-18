@@ -3,6 +3,8 @@
  */
 package me.sumeetlubal.moviehub.librarymanager.cinemalytics.repo;
 
+import android.util.Log;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +123,7 @@ public class MovieRepository {
 	 */
 	public List<MovieCinemalytics> GetUpcomingMovies() throws Exception {
 		String url = " http://api.cinemalytics.in/v2//movie/upcoming/?auth_token=" + authToken;
+		Log.d("Hello",url);
 		String jsonResponse = UrlUtil.MakeGetCall(url);
 
 		Type type = new TypeToken<List<MovieCinemalytics>>() {

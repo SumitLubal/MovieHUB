@@ -3,19 +3,28 @@
  */
 package me.sumeetlubal.moviehub.librarymanager.cinemalytics.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author Arjit
  *
  */
 public class MovieExtendedWithLinks {
-
+	@SerializedName("Movie")
     private MovieCinemalytics movieCinemalytics;
+	@SerializedName("ErosNow")
     private String erosNow;
+	@SerializedName("YouTube")
     private String youTube;
+	@SerializedName("BigFlix")
     private String bigFlix;
+	@SerializedName("Hotstar")
     private String hotstar;
+	@SerializedName("Spuul")
     private String spuul;
+	@SerializedName("BoxTV")
     private String boxTV;
+	@SerializedName("SonyTiv")
     private String sonyLiv;
 	
     /**
