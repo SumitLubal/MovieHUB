@@ -40,28 +40,29 @@ public class MainPageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(final ViewGroup container, final int position) {
-        final View view = LayoutInflater.from(
-                mContext).inflate(R.layout.item_vp_list, null, false);
+        View view = null;
         if(position==0){
+            view = LayoutInflater.from(
+                    mContext).inflate(R.layout.item_vp_list, null, false);
             Log.d(TAG,"Home pager clicked"); //for Home we are going with different Views
-            final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv); //lets use common RV's here
-            recyclerView.setHasFixedSize(true);
+            final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view); //lets use common RV's here
             recyclerView.setLayoutManager(new LinearLayoutManager(
                             mContext, LinearLayoutManager.VERTICAL, false
                     )
             );
-            recyclerView.setAdapter(new RecycleAdapter(mContext));
+            RecycleAdapter recycleAdapter = new RecycleAdapter(mContext);
+            recyclerView.setAdapter(recycleAdapter);
         }else{
+            view = LayoutInflater.from(
+                    mContext).inflate(R.layout.item_vp_list2, null, false);
             final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(
                             mContext, LinearLayoutManager.VERTICAL, false
                     )
             );
-            recyclerView.setAdapter(new RecycleAdapter(mContext));
+            recyclerView.setAdapter(new GridRecycleViewAdapter(mContext));
         }
-
-
         container.addView(view);
         return view;
     }

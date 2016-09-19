@@ -11,28 +11,52 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.sumeetlubal.moviehub.R;
+import me.sumeetlubal.moviehub.display.model.SectionDataModel;
 import me.sumeetlubal.moviehub.display.model.SingleItemModel;
 
 /**
  * Created by SAM on 18-09-2016.
  */
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.SingleItemRowHolder>  {
+public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.SingleItemRowHolder> {
     private ArrayList<SingleItemModel> itemsList;
+    private List<SectionDataModel> dataList;
     private Context mContext;
-    RecycleAdapter(Context context){
+
+    RecycleAdapter(Context context) {
         mContext = context;
+        dataList = new ArrayList<SectionDataModel>();
+        for (int i = 1; i <= 5; i++) {
+
+            SectionDataModel dm = new SectionDataModel();
+
+            dm.setHeaderTitle("Section " + i);
+
+            ArrayList<SingleItemModel> singleItem = new ArrayList<SingleItemModel>();
+            for (int j = 0; j <= 5; j++) {
+                singleItem.add(new SingleItemModel("Item " + j, "URL " + j));
+            }
+
+            dm.setAllItemsInSection(singleItem);
+
+            dataList.add(dm);
+
+        }
+
     }
+
     @Override
     public SingleItemRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_single_card, null);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, null);
         SingleItemRowHolder mh = new SingleItemRowHolder(v);
         return mh;
     }
 
     @Override
     public void onBindViewHolder(SingleItemRowHolder holder, int i) {
+
 
         final String sectionName = dataList.get(i).getHeaderTitle();
 
@@ -75,8 +99,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.SingleIt
             public void onClick(View v) {
 
 
-                Toast.makeText(v.getContext(), "click event on more, "+sectionName , Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(v.getContext(), "click event on more, " + sectionName, Toast.LENGTH_SHORT).show();
 
 
             }
@@ -95,10 +118,12 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.SingleIt
                 .error(R.drawable.bg)
                 .into(feedListRowHolder.thumbView);*/
     }
+
     @Override
     public int getItemCount() {
-        return 20;
+        return dataList.size()-1;
     }
+
     public class SingleItemRowHolder extends RecyclerView.ViewHolder {
 
         protected TextView itemTitle;
@@ -108,13 +133,12 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.SingleIt
         protected Button btnMore;
 
 
-
         public SingleItemRowHolder(View view) {
             super(view);
 
             this.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
             this.recycler_view_list = (RecyclerView) view.findViewById(R.id.recycler_view_list);
-            this.btnMore= (Button) view.findViewById(R.id.btnMore);
+            this.btnMore = (Button) view.findViewById(R.id.btnMore);
 
 
         }
