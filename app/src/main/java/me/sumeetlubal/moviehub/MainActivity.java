@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String TAG = "MainActivity";
     protected static final int ID_MOVIE_BLADE_RUNNER = 78;
-    private final String API_KEY_CINEMALYTICS = "569A5D6CA5691E4C6B69D62E02F4114C", API_KEY_TMDB = "af270a1c3ba90195173e23eb5b191985";
+    public final String API_KEY_CINEMALYTICS = "569A5D6CA5691E4C6B69D62E02F4114C", API_KEY_TMDB = "af270a1c3ba90195173e23eb5b191985";
     private Button btnLaunch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     class FetchMovies extends AsyncTask<Void, Void, Void> {
         void printMovies(API api, String s) {
             try {
-                List<MovieBase> movies = api.getNowTrending();
+                List<MovieBase> movies = api.getUpComingMovies();
                 int i = 0;
                 for (MovieBase movie : movies) {
+                    Log.d(TAG, (i++) + " " + movie.getTitle());
+                    Log.d(TAG, (i++) + " " + movie.getPoster());
                     Log.d(TAG, (i++) + " " + movie.getTitle());
                 }
             } catch (Exception p) {
@@ -51,9 +53,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected Void doInBackground(Void... voids) {
             API.APIBuilder builder = new API.APIBuilder();
-            API api = builder.APIKey(API_KEY_TMDB).DBType(API.DBTYPE.DB_TMDB).Language(API.LANGUAGES.LANGUAGE_ENGLISH).build();
+            API api = builder.APIKey(API_KEY_TMDB)
+                    .DBType(API.DBTYPE.DB_TMDB)
+                    .Language(API.LANGUAGES.LANGUAGE_ENGLISH)
+                    .build();
             printMovies(api,"");
             return null;
         }
+
     }
 }

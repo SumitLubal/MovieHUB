@@ -13,17 +13,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import me.sumeetlubal.moviehub.R;
 import me.sumeetlubal.moviehub.display.model.SingleItemModel;
 
 public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListDataAdapter.SingleRowHolder> {
 
-    private ArrayList<SingleItemModel> itemsList;
+    private List<SingleItemModel> itemsList;
     private Context mContext;
 
-    public SectionListDataAdapter(Context context, ArrayList<SingleItemModel> itemsList) {
+    public SectionListDataAdapter(Context context, List<SingleItemModel> itemsList) {
         itemsList = itemsList;
         mContext = context;
     }
@@ -43,12 +47,11 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
         holder.tvTitle.setText(singleItem.getName());
 
 
-       /* Glide.with(mContext)
-                .load(feedItem.getImageURL())
+        Glide.with(mContext)
+                .load(itemsList.get(i).getUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .error(R.drawable.bg)
-                .into(feedListRowHolder.thumbView);*/
+                .into(holder.itemImage);
     }
 
     @Override

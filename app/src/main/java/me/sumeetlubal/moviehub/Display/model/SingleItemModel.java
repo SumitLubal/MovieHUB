@@ -1,5 +1,7 @@
 package me.sumeetlubal.moviehub.display.model;
 
+import me.sumeetlubal.moviehub.librarymanager.Model.MovieBase;
+
 /**
  * Created by pratap.kesaboyina on 01-12-2015.
  */
@@ -9,14 +11,15 @@ public class SingleItemModel {
     private String name;
     private String url;
     private String description;
-
+    private MovieBase movieBase;
 
     public SingleItemModel() {
     }
 
-    public SingleItemModel(String name, String url) {
+    public SingleItemModel(String name, String url, MovieBase movieBase) {
         this.name = name;
         this.url = url;
+        this.movieBase = movieBase;
     }
 
 

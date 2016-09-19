@@ -1,6 +1,7 @@
 package me.sumeetlubal.moviehub.display.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pratap.kesaboyina on 30-11-2015.
@@ -10,13 +11,13 @@ public class SectionDataModel {
 
 
     private String headerTitle;
-    private ArrayList<SingleItemModel> allItemsInSection;
+    private List<SingleItemModel> allItemsInSection;
 
 
     public SectionDataModel() {
 
     }
-    public SectionDataModel(String headerTitle, ArrayList<SingleItemModel> allItemsInSection) {
+    public SectionDataModel(String headerTitle, List<SingleItemModel> allItemsInSection) {
         this.headerTitle = headerTitle;
         this.allItemsInSection = allItemsInSection;
     }
@@ -31,7 +32,7 @@ public class SectionDataModel {
         this.headerTitle = headerTitle;
     }
 
-    public ArrayList<SingleItemModel> getAllItemsInSection() {
+    public List<SingleItemModel> getAllItemsInSection() {
         return allItemsInSection;
     }
 

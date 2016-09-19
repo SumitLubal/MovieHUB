@@ -50,8 +50,9 @@ public class MainPageAdapter extends PagerAdapter {
                             mContext, LinearLayoutManager.VERTICAL, false
                     )
             );
-            RecycleAdapter recycleAdapter = new RecycleAdapter(mContext);
-            recyclerView.setAdapter(recycleAdapter);
+            HomeScreenRecycleAdapter homeScreenRecycleAdapter = new HomeScreenRecycleAdapter(mContext);
+            recyclerView.setAdapter(homeScreenRecycleAdapter);
+            homeScreenRecycleAdapter.notifyDataSetChanged();
         }else{
             view = LayoutInflater.from(
                     mContext).inflate(R.layout.item_vp_list2, null, false);

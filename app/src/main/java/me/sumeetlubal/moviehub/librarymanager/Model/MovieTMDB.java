@@ -38,6 +38,7 @@ public class MovieTMDB implements MovieBase {
 
     @Override
     public String getPoster() {
+        if(m_MovieDBObject.getPosterPath()==null) return null;
         return Utils.createImageUrl(API.getTmdbapi(), m_MovieDBObject.getPosterPath(), "w45").toString(); //TODO: please change from w45 to desired format on device to save downloading of images based on network.
     }
 
