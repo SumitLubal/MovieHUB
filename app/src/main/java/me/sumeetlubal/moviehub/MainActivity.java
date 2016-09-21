@@ -17,13 +17,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String TAG = "MainActivity";
     protected static final int ID_MOVIE_BLADE_RUNNER = 78;
-    public final String API_KEY_CINEMALYTICS = "569A5D6CA5691E4C6B69D62E02F4114C", API_KEY_TMDB = "af270a1c3ba90195173e23eb5b191985";
     private Button btnLaunch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new FetchMovies().execute();
+        //new FetchMovies().execute();
         btnLaunch = (Button) findViewById(R.id.button_launch);
         btnLaunch.setOnClickListener(this);
     }
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected Void doInBackground(Void... voids) {
             API.APIBuilder builder = new API.APIBuilder();
-            API api = builder.APIKey(API_KEY_TMDB)
+            API api = builder.APIKey(API.API_KEY_TMDB)
                     .DBType(API.DBTYPE.DB_TMDB)
                     .Language(API.LANGUAGES.LANGUAGE_ENGLISH)
                     .build();

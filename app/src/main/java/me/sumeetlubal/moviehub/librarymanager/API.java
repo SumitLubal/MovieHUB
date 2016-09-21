@@ -14,9 +14,9 @@ import java.util.List;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
-import me.sumeetlubal.moviehub.display.adapter.HomeScreenRecycleAdapter;
 import me.sumeetlubal.moviehub.display.model.SectionDataModel;
 import me.sumeetlubal.moviehub.display.model.SingleItemModel;
+import me.sumeetlubal.moviehub.librarymanager.Model.GenerType;
 import me.sumeetlubal.moviehub.librarymanager.Model.MovieBase;
 import me.sumeetlubal.moviehub.librarymanager.Model.MovieCNM;
 import me.sumeetlubal.moviehub.librarymanager.Model.MovieTMDB;
@@ -35,7 +35,7 @@ public class API {
     //TODO: need to add other language support after we successfully test HINDI and ENGLISH
     private static TmdbApi m_tmdbapi;
     private Cinemalytics m_CNMDAPI;
-
+    public static final String API_KEY_CINEMALYTICS = "0DFE049E85E5ED102EABBF980CDE8216", API_KEY_TMDB = "af270a1c3ba90195173e23eb5b191985";
     public enum LANGUAGES {LANGUAGE_ENGLISH, LANGUAGE_HINDI}
 
     ;
@@ -50,6 +50,13 @@ public class API {
     volatile private ArrayList<List<MovieBase>> contents;
     volatile private ArrayList<SectionDataModel> dataViewModel;
     private boolean addWithoutImage = false;
+    private static API selfReference;
+
+    public static API getAPI() {
+        if (selfReference == null)
+            Log.e(TAG, "Forgetting to initialize API? - Look for API implementation");
+        return selfReference;
+    }
 
     private API(APIBuilder builder) {
         EventBus.getDefault().register(this);
@@ -167,7 +174,7 @@ public class API {
 
         public API build() {
             validateParameters();
-            return new API(this);
+            return (selfReference == null) ? (selfReference = new API(this)) : selfReference;
         }
 
         private void validateParameters() {
@@ -207,59 +214,31 @@ public class API {
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void handleRequest(WorkRequstEvent event) {
-        ArrayList<SectionDataModel> allSampleData = new ArrayList<>();
         List<MovieBase> data = null;
-        try {
-            data = getTopRatedMovies();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ;
-        for (int i = 1; i <= 5; i++) {
-
-            SectionDataModel dm = new SectionDataModel();
-
-            dm.setHeaderTitle("Section " + i);
-
-            ArrayList<SingleItemModel> singleItem = new ArrayList<SingleItemModel>();
-            for (int j = 0; j <= 5; j++) {
-                singleItem.add(new SingleItemModel("Item " + j, "URL " + j));
-            }
-
-            dm.setAllItemsInSection(singleItem);
-
-            allSampleData.add(dm);
-
-        }
-        if(true) {
-            Log.d(TAG,"Returning something");
-            EventBus.getDefault().post(new NotifyCompleteEvent(event.getmType(), allSampleData));
-            return;
-        }
         //get data
         try {
             //if (event.getmType() == NotifyCompleteEvent.NotifyCompleteEventType.POPULAR) {
-                if (contents.get(0) == null) {
-                    data = getTopRatedMovies();
-                    contents.set(0, data);
-                    ArrayList<SingleItemModel> model = convertToViewModel(data);
-                    dataViewModel.add(0, new SectionDataModel("Poplar Movies", model));
-                }
-           // } else if (event.getmType() == NotifyCompleteEvent.NotifyCompleteEventType.NOWTRENDING) {
-                if (contents.get(1) == null) {
-                    data = getNowTrending();
-                    contents.set(1, data);
-                    ArrayList<SingleItemModel> model = convertToViewModel(data);
-                    dataViewModel.add(1, new SectionDataModel("Now Trending", model));
-                }
+            if (contents.get(0) == null) {
+                data = getTopRatedMovies();
+                contents.set(0, data);
+                ArrayList<SingleItemModel> model = convertToViewModel(data);
+                dataViewModel.add(0, new SectionDataModel("Poplar Movies", model));
+            }
+            // } else if (event.getmType() == NotifyCompleteEvent.NotifyCompleteEventType.NOWTRENDING) {
+            if (contents.get(1) == null) {
+                data = getNowTrending();
+                contents.set(1, data);
+                ArrayList<SingleItemModel> model = convertToViewModel(data);
+                dataViewModel.add(1, new SectionDataModel("Now Trending", model));
+            }
 
-           // } else if (event.getmType() == NotifyCompleteEvent.NotifyCompleteEventType.UPCOMING) {
-                if (contents.get(2) == null) {
-                    data = getUpComingMovies();
-                    contents.set(2, data);
-                    ArrayList<SingleItemModel> model = convertToViewModel(data);
-                    dataViewModel.add(2, new SectionDataModel("Upcomings", model));
-                }
+            // } else if (event.getmType() == NotifyCompleteEvent.NotifyCompleteEventType.UPCOMING) {
+            if (contents.get(2) == null) {
+                data = getUpComingMovies();
+                contents.set(2, data);
+                ArrayList<SingleItemModel> model = convertToViewModel(data);
+                dataViewModel.add(2, new SectionDataModel("Upcomings", model));
+            }
 
             //}
             //send this to GUI's
@@ -273,7 +252,7 @@ public class API {
     private ArrayList<SingleItemModel> convertToViewModel(List<MovieBase> data) {
         ArrayList<SingleItemModel> model = new ArrayList<>();
         for (MovieBase movie : data) {
-            if (movie != null && movie.getPoster() != null &&movie.getTitle() != null)
+            if (movie != null && movie.getPoster() != null && movie.getTitle() != null)
                 model.add(new SingleItemModel(movie.getTitle(), movie.getPoster()));
         }
         return model;

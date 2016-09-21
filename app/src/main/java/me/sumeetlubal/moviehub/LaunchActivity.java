@@ -19,13 +19,15 @@ import me.sumeetlubal.moviehub.librarymanager.API;
 
 public class LaunchActivity extends AppCompatActivity {
     private final String API_KEY_CINEMALYTICS = "569A5D6CA5691E4C6B69D62E02F4114C", API_KEY_TMDB = "af270a1c3ba90195173e23eb5b191985";
+    private API api;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Initiate API in HomeScreenRecycleAdapter
         initUI();
-        API.APIBuilder apiBuilder = new API.APIBuilder().APIKey(API_KEY_TMDB).DBType(API.DBTYPE.DB_TMDB).Language(API.LANGUAGES.LANGUAGE_ENGLISH);
     }
 
     private void initUI() {
@@ -160,7 +162,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         final CollapsingToolbarLayout collapsingToolbarLayout =
                 (CollapsingToolbarLayout) findViewById(R.id.toolbar);
-        collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#009F90AF"));
+        collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#009F90AF"));//do not change first two digits this is to put text in background
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor("#9f90af"));
     }
 }

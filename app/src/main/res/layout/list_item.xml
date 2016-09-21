@@ -23,7 +23,7 @@
             android:layout_gravity="center_vertical"
             android:layout_toLeftOf="@+id/btnMore"
             android:text="Sample title"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 
         <Button
@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:theme="@style/MyButton"
             android:text="more"
-            android:textColor="#FFF" />
+            android:textColor="@color/colorPrimary" />
 
 
     </RelativeLayout>

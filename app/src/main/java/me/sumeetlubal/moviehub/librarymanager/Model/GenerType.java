@@ -1,4 +1,4 @@
-package me.sumeetlubal.moviehub.librarymanager;
+package me.sumeetlubal.moviehub.librarymanager.Model;
 
 import java.util.HashMap;
 

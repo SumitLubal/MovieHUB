@@ -22,6 +22,7 @@ import java.util.List;
 import me.sumeetlubal.moviehub.R;
 import me.sumeetlubal.moviehub.display.model.SectionDataModel;
 import me.sumeetlubal.moviehub.display.model.SingleItemModel;
+import me.sumeetlubal.moviehub.librarymanager.API;
 import me.sumeetlubal.moviehub.librarymanager.internalevents.NotifyCompleteEvent;
 import me.sumeetlubal.moviehub.librarymanager.internalevents.WorkRequstEvent;
 
@@ -30,9 +31,9 @@ import static me.sumeetlubal.moviehub.librarymanager.internalevents.NotifyComple
 /**
  * Created by SAM on 18-09-2016.
  */
-public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRecycleAdapter.SingleItemRowHolder> {
+class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRecycleAdapter.SingleItemRowHolder> {
     private static final String TAG = "HomeScreenAdapter";
-    private ArrayList<SectionDataModel> dataList;
+    private List<SectionDataModel> dataList;
     private Context mContext;
 
     HomeScreenRecycleAdapter(Context context) {
@@ -41,7 +42,7 @@ public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRec
         dataList = new ArrayList<>();
         //populate data here using fetcher async task
         //meanwhile we can display progress bar or older data
-        new FetchData().execute();
+       new FetchData().execute();
         //createDummyData();
     }
 
@@ -135,7 +136,7 @@ public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRec
         if(dataList ==null){
             return 0;
         }
-        return dataList.size()-1;
+        return dataList.size();
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(NotifyCompleteEvent event) {
@@ -168,6 +169,11 @@ public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRec
         protected Void doInBackground(Void... voids) {
             //get data from either DB or internet
             //get different data models
+            API.APIBuilder builder = new API.APIBuilder();
+            builder.APIKey(API.API_KEY_CINEMALYTICS)
+                    .DBType(API.DBTYPE.DB_CINEMALYTICS)
+                    .Language(API.LANGUAGES.LANGUAGE_ENGLISH)
+                    .build();
             //TODO:add simple offline fetched movies to API class
             EventBus.getDefault().post(new WorkRequstEvent(NotifyCompleteEventType.POPULAR));
             Log.d(TAG,"Hey I am done");

@@ -49,8 +49,7 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
 
         Glide.with(mContext)
                 .load(itemsList.get(i).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL).crossFade()
                 .into(holder.itemImage);
     }
 
@@ -59,7 +58,7 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
         return (null != itemsList ? itemsList.size() : 0);
     }
 
-    public class SingleRowHolder extends RecyclerView.ViewHolder {
+    class SingleRowHolder extends RecyclerView.ViewHolder {
 
         protected TextView tvTitle;
 

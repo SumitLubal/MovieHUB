@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Movie Hub</string>
-    <string name="title_activity_launch">LaunchActivit</string>
+    <string name="title_activity_launch">Movie Hub</string>
 </resources>

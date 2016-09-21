@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
-
-
+    <color name="moreButtonHighlight">#FFF</color>
+    
+    
+    <color name="colorPrimaryDark">#605271</color>
+    <color name="colorPrimary">#9f90af</color>
 
     <color name="teal_050">#e0f2f1</color> <!-- Use with black text -->
     <color name="teal_100">#b2dfdb</color> <!-- Use with black text -->
