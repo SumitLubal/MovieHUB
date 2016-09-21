@@ -16,10 +16,10 @@ public class SingleItemModel {
     public SingleItemModel() {
     }
 
-    public SingleItemModel(String name, String url, MovieBase movieBase) {
+    public SingleItemModel(String name, String url) {
         this.name = name;
         this.url = url;
-        this.movieBase = movieBase;
+        this.movieBase = null;
     }
 
 

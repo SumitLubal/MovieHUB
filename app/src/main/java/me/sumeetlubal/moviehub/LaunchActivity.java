@@ -15,15 +15,17 @@ import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 import java.util.ArrayList;
 
 import me.sumeetlubal.moviehub.display.adapter.MainPageAdapter;
+import me.sumeetlubal.moviehub.librarymanager.API;
 
 public class LaunchActivity extends AppCompatActivity {
-
+    private final String API_KEY_CINEMALYTICS = "569A5D6CA5691E4C6B69D62E02F4114C", API_KEY_TMDB = "af270a1c3ba90195173e23eb5b191985";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initUI();
+        API.APIBuilder apiBuilder = new API.APIBuilder().APIKey(API_KEY_TMDB).DBType(API.DBTYPE.DB_TMDB).Language(API.LANGUAGES.LANGUAGE_ENGLISH);
     }
 
     private void initUI() {

@@ -32,7 +32,7 @@ import static me.sumeetlubal.moviehub.librarymanager.internalevents.NotifyComple
  */
 public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRecycleAdapter.SingleItemRowHolder> {
     private static final String TAG = "HomeScreenAdapter";
-    private List<SectionDataModel> dataList;
+    private ArrayList<SectionDataModel> dataList;
     private Context mContext;
 
     HomeScreenRecycleAdapter(Context context) {
@@ -42,6 +42,7 @@ public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRec
         //populate data here using fetcher async task
         //meanwhile we can display progress bar or older data
         new FetchData().execute();
+        //createDummyData();
     }
 
     @Override
@@ -50,14 +51,31 @@ public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRec
         SingleItemRowHolder mh = new SingleItemRowHolder(v);
         return mh;
     }
+    private void createDummyData() {
+        for (int i = 1; i <= 5; i++) {
 
+            SectionDataModel dm = new SectionDataModel();
+
+            dm.setHeaderTitle("Section " + i);
+
+            ArrayList<SingleItemModel> singleItem = new ArrayList<SingleItemModel>();
+            for (int j = 0; j <= 5; j++) {
+                singleItem.add(new SingleItemModel("Item " + j, "URL " + j));
+            }
+
+            dm.setAllItemsInSection(singleItem);
+
+            dataList.add(dm);
+
+        }
+    }
     @Override
     public void onBindViewHolder(SingleItemRowHolder holder, int i) {
 
 
         final String sectionName = dataList.get(i).getHeaderTitle();
 
-        List<SingleItemModel> singleSectionItems = dataList.get(i).getAllItemsInSection();
+        ArrayList<SingleItemModel> singleSectionItems = dataList.get(i).getAllItemsInSection();
 
         holder.itemTitle.setText(sectionName);
 
@@ -124,16 +142,16 @@ public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRec
         dataList = event.getResult();
         notifyDataSetChanged();
     }
-    public class SingleItemRowHolder extends RecyclerView.ViewHolder {
+    class SingleItemRowHolder extends RecyclerView.ViewHolder {
 
-        protected TextView itemTitle;
+        TextView itemTitle;
 
-        protected RecyclerView recycler_view_list;
+        RecyclerView recycler_view_list;
 
-        protected Button btnMore;
+        Button btnMore;
 
 
-        public SingleItemRowHolder(View view) {
+        SingleItemRowHolder(View view) {
             super(view);
 
             this.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -144,7 +162,7 @@ public class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRec
         }
 
     }
-    public class FetchData extends AsyncTask<Void,Void,Void> {
+    private class FetchData extends AsyncTask<Void,Void,Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {

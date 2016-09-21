@@ -47,8 +47,8 @@ public class API {
     private final String m_APIKey;
     private final DBTYPE m_DBType;
     private final LANGUAGES m_UserLanguage;
-    volatile private List<List<MovieBase>> contents;
-    volatile private List<SectionDataModel> dataViewModel;
+    volatile private ArrayList<List<MovieBase>> contents;
+    volatile private ArrayList<SectionDataModel> dataViewModel;
     private boolean addWithoutImage = false;
 
     private API(APIBuilder builder) {
@@ -207,21 +207,49 @@ public class API {
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void handleRequest(WorkRequstEvent event) {
-        List<MovieBase> data;
+        ArrayList<SectionDataModel> allSampleData = new ArrayList<>();
+        List<MovieBase> data = null;
+        try {
+            data = getTopRatedMovies();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ;
+        for (int i = 1; i <= 5; i++) {
+
+            SectionDataModel dm = new SectionDataModel();
+
+            dm.setHeaderTitle("Section " + i);
+
+            ArrayList<SingleItemModel> singleItem = new ArrayList<SingleItemModel>();
+            for (int j = 0; j <= 5; j++) {
+                singleItem.add(new SingleItemModel("Item " + j, "URL " + j));
+            }
+
+            dm.setAllItemsInSection(singleItem);
+
+            allSampleData.add(dm);
+
+        }
+        if(true) {
+            Log.d(TAG,"Returning something");
+            EventBus.getDefault().post(new NotifyCompleteEvent(event.getmType(), allSampleData));
+            return;
+        }
         //get data
         try {
             //if (event.getmType() == NotifyCompleteEvent.NotifyCompleteEventType.POPULAR) {
                 if (contents.get(0) == null) {
                     data = getTopRatedMovies();
                     contents.set(0, data);
-                    List<SingleItemModel> model = convertToViewModel(data);
+                    ArrayList<SingleItemModel> model = convertToViewModel(data);
                     dataViewModel.add(0, new SectionDataModel("Poplar Movies", model));
                 }
            // } else if (event.getmType() == NotifyCompleteEvent.NotifyCompleteEventType.NOWTRENDING) {
                 if (contents.get(1) == null) {
                     data = getNowTrending();
                     contents.set(1, data);
-                    List<SingleItemModel> model = convertToViewModel(data);
+                    ArrayList<SingleItemModel> model = convertToViewModel(data);
                     dataViewModel.add(1, new SectionDataModel("Now Trending", model));
                 }
 
@@ -229,7 +257,7 @@ public class API {
                 if (contents.get(2) == null) {
                     data = getUpComingMovies();
                     contents.set(2, data);
-                    List<SingleItemModel> model = convertToViewModel(data);
+                    ArrayList<SingleItemModel> model = convertToViewModel(data);
                     dataViewModel.add(2, new SectionDataModel("Upcomings", model));
                 }
 
@@ -242,11 +270,11 @@ public class API {
         }
     }
 
-    private List<SingleItemModel> convertToViewModel(List<MovieBase> data) {
-        List<SingleItemModel> model = new ArrayList<>();
+    private ArrayList<SingleItemModel> convertToViewModel(List<MovieBase> data) {
+        ArrayList<SingleItemModel> model = new ArrayList<>();
         for (MovieBase movie : data) {
             if (movie != null && movie.getPoster() != null &&movie.getTitle() != null)
-                model.add(new SingleItemModel(movie.getTitle(), movie.getPoster(), movie));
+                model.add(new SingleItemModel(movie.getTitle(), movie.getPoster()));
         }
         return model;
     }

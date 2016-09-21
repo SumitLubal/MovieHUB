@@ -24,11 +24,11 @@ import me.sumeetlubal.moviehub.display.model.SingleItemModel;
 
 public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListDataAdapter.SingleRowHolder> {
 
-    private List<SingleItemModel> itemsList;
+    private ArrayList<SingleItemModel> itemsList;
     private Context mContext;
 
-    public SectionListDataAdapter(Context context, List<SingleItemModel> itemsList) {
-        itemsList = itemsList;
+    public SectionListDataAdapter(Context context, ArrayList<SingleItemModel> itemsList) {
+        this.itemsList = itemsList;
         mContext = context;
     }
 
