@@ -17,4 +17,4 @@ You can use this project as sample for learning android
 
 ------------
 Screenshot :
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/SumitLubal/MovieHUB/blob/master/screen.png)
