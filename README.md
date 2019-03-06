@@ -14,3 +14,7 @@ Features -
 You can use this project as sample for learning android 
 ###This APP is in complete development phase.
 ###Using CinemalyticsSDK for hindi filmsso cheers to them
+
+------------
+Screenshot :
+![alt text](http://url/to/img.png)

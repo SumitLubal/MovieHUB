@@ -170,8 +170,8 @@ class HomeScreenRecycleAdapter extends RecyclerView.Adapter<HomeScreenRecycleAda
             //get data from either DB or internet
             //get different data models
             API.APIBuilder builder = new API.APIBuilder();
-            builder.APIKey(API.API_KEY_CINEMALYTICS)
-                    .DBType(API.DBTYPE.DB_CINEMALYTICS)
+            builder.APIKey(API.API_KEY_TMDB)
+                    .DBType(API.DBTYPE.DB_TMDB)
                     .Language(API.LANGUAGES.LANGUAGE_ENGLISH)
                     .build();
             //TODO:add simple offline fetched movies to API class
